@@ -1,27 +1,48 @@
 package narif.pocs.coolspablog;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.Arrays;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 @SpringBootApplication
-@RestController("/resource")
 public class CoolSpaBlogApplication {
-	
-	@GetMapping
-	public Map<String, Object> getTheWelcomeNotes(){
-		Map<String, Object> model = new HashMap<>();
-		model.put("id",UUID.randomUUID().toString());
-		model.put("content", "Welcome to the coolest SPA Blog site ever");
-		return model;
-	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(CoolSpaBlogApplication.class, args);
 	}
+	
+	@Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("OPTIONS");
+        config.addAllowedMethod("GET");
+        config.addAllowedMethod("POST");
+        config.addAllowedMethod("PUT");
+        config.addAllowedMethod("DELETE");
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
+    }
+	
+//	@Bean
+//	CorsConfigurationSource corsConfigurationSource() {
+//	        CorsConfiguration configuration = new CorsConfiguration();
+//	        configuration.setAllowedOrigins(Arrays.asList("*"));
+//	        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"));
+//	        configuration.setAllowedHeaders(Arrays.asList("X-Requested-With", "Origin", "Content-Type", "Accept", "Authorization"));
+//	        configuration.setAllowCredentials(true);
+//	        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//	        source.registerCorsConfiguration("/**", configuration);
+//	        return source;
+//	    }
+
 }
