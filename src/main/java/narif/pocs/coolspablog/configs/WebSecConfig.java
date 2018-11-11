@@ -45,6 +45,7 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
  		.and()
  		.logout()
  		.logoutUrl("/j_spring_security_logout")
+ 		.logoutSuccessUrl("/user")
 // 		.addLogoutHandler(new LogoutHandler() {
 //			
 //			@Override
@@ -53,7 +54,7 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
 //				
 //			}
 //		})
- 		.addLogoutHandler((httpServletRequest, httpServletResponse, authentication) -> {
+ 		.logoutSuccessHandler((httpServletRequest, httpServletResponse, authentication) -> {
  		    httpServletResponse.setStatus(HttpServletResponse.SC_OK);
  		})
  		.invalidateHttpSession(true);
