@@ -1,0 +1,1 @@
+# Cool SPA Blog
